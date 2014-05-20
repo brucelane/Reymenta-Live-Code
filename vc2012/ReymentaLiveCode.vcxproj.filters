@@ -213,10 +213,7 @@
     <ClCompile Include="..\..\..\blocks\OSC\src\ip\win32\UdpSocket.cpp">
       <Filter>Blocks\OSC\src\ip\win32</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Spout\include\SpoutSend.h">
-      <Filter>Blocks\Spout\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\blocks\Spout\include\SpoutReceive.h">
+    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
       <Filter>Blocks\Spout\include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -225,6 +222,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReymentaLiveCodeApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

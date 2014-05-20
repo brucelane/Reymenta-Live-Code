@@ -4,13 +4,34 @@
 void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 {
 	settings->setTitle("Reymenta Live Code");
-	settings->setWindowSize( 1280, 720 );
+	mRenderWidth = 1280;
+	mRenderHeight = 720;
+	settings->setWindowSize(mRenderWidth, mRenderHeight);
+	settings->setFullScreen(false);
+	settings->setResizable(false); // keep the screen size constant for a sender
+	settings->setFrameRate(120.0f);
 }
 
 void ReymentaLiveCodeApp::setup()
 {
+	iGlobalTime = 1.0f;
+	iResolution = Vec3f(mRenderWidth, mRenderHeight, 1.0);
+	// spout
+	glEnable(GL_TEXTURE_2D);
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
+	g_Width = mRenderWidth;
+	g_Height = mRenderHeight;
+	// Set up the texture we will use to send out
+	// We grab the screen so it has to be the same size
+	spoutTexture = gl::Texture(g_Width, g_Height);
+	strcpy_s(SenderName, "Reymenta Live Code"); // we have to set a sender name first
+	bInitialized = InitSender(SenderName, g_Width, g_Height, bTextureShare);
+	// bTextureShare informs us whether Spout initialized for texture share or memory share
+	//mSpoutFbo = gl::Fbo(g_Width, g_Height);
+
 	// Create CodeEditor
-	mCodeEditor = CodeEditor::create("shaders/simple.frag");
+	mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
 
 	mCodeEditor->registerCodeChanged( "shaders/simple.frag", [this](const string& frag) {
 		try {
@@ -21,17 +42,21 @@ void ReymentaLiveCodeApp::setup()
 			mCodeEditor->setError("Simple: " + string(exc.what()));
 		}
 	} );
+	mCodeEditor->setTheme("dark");
+	mCodeEditor->setOpacity(0.9f);
+	mCodeEditor->enableLineWrapping(false);
+
 }
 
 void ReymentaLiveCodeApp::shutdown()
 {
-	
+	ReleaseSender();
 }
 
 void ReymentaLiveCodeApp::update()
 {
 	app::getWindow()->setTitle( "Reymenta Live Code - " + toString(getAverageFps()) );
-	
+	iGlobalTime = getElapsedSeconds();
 }
 
 void ReymentaLiveCodeApp::draw()
@@ -42,15 +67,27 @@ void ReymentaLiveCodeApp::draw()
 	if (mShader){
 		gl::enableAlphaBlending();
 		mShader.bind();
+		mShader.uniform("iGlobalTime", iGlobalTime);
+		// to move inside the shader it's ok: aShader.uniform("iResolution", Vec3f(mParameterBag->mRenderResoXY.x, mParameterBag->mRenderResoXY.y, 1.0));
+		mShader.uniform("iResolution", Vec3f(mRenderWidth, mRenderHeight, 1.0));
 		gl::drawSolidRect(getWindowBounds());
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}
-}
+	// -------- SPOUT -------------
+	if (bInitialized) {
 
-void ReymentaLiveCodeApp::resize()
-{
-	
+		// Grab the screen (current read buffer) into the local spout texture
+		spoutTexture.bind();
+		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, g_Width, g_Height);
+		spoutTexture.unbind();
+
+		// Send the texture for all receivers to use
+		SendTexture(spoutTexture.getId(), spoutTexture.getTarget(), g_Width, g_Height, true); // true meaning invert
+
+	}
+	//Spout::SendTexture(mSpoutFbo.getTexture().getId(), mSpoutFbo.getTexture().getTarget(), mSpoutFbo.getWidth(), mSpoutFbo.getHeight(), false);
+
 }
 
 void ReymentaLiveCodeApp::mouseMove( MouseEvent event )
