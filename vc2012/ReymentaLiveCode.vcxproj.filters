@@ -216,6 +216,9 @@
     <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
       <Filter>Blocks\Spout\include</Filter>
     </ClInclude>
+    <ClCompile Include="..\src\ParameterBag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -225,6 +228,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ParameterBag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

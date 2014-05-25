@@ -4,6 +4,11 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/gl/GlslProg.h"
 
+// transparent window
+#include "dwmapi.h"
+// parameters
+#include "ParameterBag.h"
+
 #include "CodeEditor.h"
 #include "UIController.h"
 #include "UIElement.h"
@@ -23,6 +28,7 @@ using namespace ci::app;
 using namespace std;
 using namespace MinimalUI;
 using namespace Spout;
+using namespace Reymenta;
 
 class ReymentaLiveCodeApp : public AppBasic {
 public:
@@ -48,6 +54,8 @@ private:
 	Vec3f					iResolution;        // viewport resolution (in pixels)
 	gl::GlslProg			mShader;
 	CodeEditorRef			mCodeEditor;
+	// Parameters
+	ParameterBagRef				mParameterBag;
 	// spout
 	bool bInitialized; // true if a sender initializes OK
 	bool bTextureShare; // tells us if texture share compatible

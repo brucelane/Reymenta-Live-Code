@@ -14,6 +14,9 @@ void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 
 void ReymentaLiveCodeApp::setup()
 {
+	// parameters
+	mParameterBag = ParameterBag::create();
+
 	iGlobalTime = 1.0f;
 	iResolution = Vec3f(mRenderWidth, mRenderHeight, 1.0);
 	// spout
@@ -31,17 +34,19 @@ void ReymentaLiveCodeApp::setup()
 	//mSpoutFbo = gl::Fbo(g_Width, g_Height);
 
 	// Create CodeEditor
-	mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
+	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().window(mCodeEditorWindow).autoSave().codeCompletion());
+	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
+	mCodeEditor = CodeEditor::create(list_of<string>("shaders/simple.vert")("shaders/simple.frag").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
 
-	mCodeEditor->registerCodeChanged( "shaders/simple.frag", [this](const string& frag) {
+	mCodeEditor->registerCodeChanged("shaders/simple.vert", "shaders/simple.frag", [this](const string& vert, const string& frag) {
 		try {
-			mShader = gl::GlslProg( NULL, frag.c_str() );
+			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
-}
-		catch (gl::GlslProgCompileExc exc) {
-			mCodeEditor->setError("Simple: " + string(exc.what()));
 		}
-	} );
+		catch (gl::GlslProgCompileExc exc) {
+			mCodeEditor->setError("E: " + string(exc.what()));
+		}
+	});
 	mCodeEditor->setTheme("dark");
 	mCodeEditor->setOpacity(0.9f);
 	mCodeEditor->enableLineWrapping(false);
@@ -61,8 +66,8 @@ void ReymentaLiveCodeApp::update()
 
 void ReymentaLiveCodeApp::draw()
 {
-	// clear out the window with black
-	gl::clear(Color(0, 0, 0));
+	// clear out the window with transparent
+	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 0.0f));
 
 	if (mShader){
 		gl::enableAlphaBlending();
@@ -115,10 +120,63 @@ void ReymentaLiveCodeApp::mouseWheel( MouseEvent event )
 
 }
 
-void ReymentaLiveCodeApp::keyDown( KeyEvent event )
+void ReymentaLiveCodeApp::keyDown(KeyEvent event)
 {
-	
+	if (event.isControlDown())
+	{
+		switch (event.getCode())
+		{
+		case KeyEvent::KEY_n:
+			mParameterBag->mEditorLineNumbers = !mParameterBag->mEditorLineNumbers;
+			mCodeEditor->enableLineNumbers(mParameterBag->mEditorLineNumbers);
+			break;
+		case KeyEvent::KEY_w:
+			mCodeEditor->enableLineWrapping(false);
+			break;
+		case KeyEvent::KEY_h:
+			mCodeEditor->hide();
+			break;
+		case KeyEvent::KEY_s:
+			mCodeEditor->show();
+			break;
+		case KeyEvent::KEY_1:
+			getWindow()->setPos(Vec2i(0, 0));
+			mCodeEditor->setOpacity(0.9f);
+			break;
+		case KeyEvent::KEY_2:
+			getWindow()->setPos(Vec2i(400, 300));
+			mCodeEditor->setOpacity(0.2f);
+			break;
+		case KeyEvent::KEY_3:
+			mCodeEditor->setFontSize(11);
+			break;
+		case KeyEvent::KEY_4:
+			mCodeEditor->setFontSize(14);
+			break;
+		case KeyEvent::KEY_5:
+			mCodeEditor->setFontSize(16);
+
+			break;
+		}
+	}
+	else
+	{
+		switch (event.getChar())
+		{
+		case '+'://43
+			mParameterBag->iBackgroundAlpha += 0.1;
+			if (mParameterBag->iBackgroundAlpha > 1.0) mParameterBag->iBackgroundAlpha = 1.0;
+			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);
+			break;
+		case '-':// 
+			mParameterBag->iBackgroundAlpha -= 0.1;
+			if (mParameterBag->iBackgroundAlpha < 0.0) mParameterBag->iBackgroundAlpha = 0.0;
+			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);
+			break;
+		}
+	}
 }
+
 
 void ReymentaLiveCodeApp::keyUp( KeyEvent event )
 {
