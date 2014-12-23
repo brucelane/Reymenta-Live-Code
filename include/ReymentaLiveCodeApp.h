@@ -27,7 +27,6 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 using namespace MinimalUI;
-using namespace Spout;
 using namespace Reymenta;
 
 class ReymentaLiveCodeApp : public AppBasic {
@@ -56,13 +55,5 @@ private:
 	CodeEditorRef			mCodeEditor;
 	// Parameters
 	ParameterBagRef				mParameterBag;
-	// spout
-	bool bInitialized; // true if a sender initializes OK
-	bool bTextureShare; // tells us if texture share compatible
-	unsigned int g_Width, g_Height; // size of the texture being sent out
-	char SenderName[256]; // sender name 
-	gl::Texture spoutTexture;  // Local Cinder texture used for sharing
-	//fbo
-	//gl::Fbo mSpoutFbo;
 
 };

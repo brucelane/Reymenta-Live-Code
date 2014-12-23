@@ -23,15 +23,6 @@ void ReymentaLiveCodeApp::setup()
 	glEnable(GL_TEXTURE_2D);
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
-	g_Width = mRenderWidth;
-	g_Height = mRenderHeight;
-	// Set up the texture we will use to send out
-	// We grab the screen so it has to be the same size
-	spoutTexture = gl::Texture(g_Width, g_Height);
-	strcpy_s(SenderName, "Reymenta Live Code"); // we have to set a sender name first
-	bInitialized = InitSender(SenderName, g_Width, g_Height, bTextureShare);
-	// bTextureShare informs us whether Spout initialized for texture share or memory share
-	//mSpoutFbo = gl::Fbo(g_Width, g_Height);
 
 	// Create CodeEditor
 	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().window(mCodeEditorWindow).autoSave().codeCompletion());
@@ -55,7 +46,7 @@ void ReymentaLiveCodeApp::setup()
 
 void ReymentaLiveCodeApp::shutdown()
 {
-	ReleaseSender();
+	
 }
 
 void ReymentaLiveCodeApp::update()
@@ -79,20 +70,6 @@ void ReymentaLiveCodeApp::draw()
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}
-	// -------- SPOUT -------------
-	if (bInitialized) {
-
-		// Grab the screen (current read buffer) into the local spout texture
-		spoutTexture.bind();
-		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, g_Width, g_Height);
-		spoutTexture.unbind();
-
-		// Send the texture for all receivers to use
-		SendTexture(spoutTexture.getId(), spoutTexture.getTarget(), g_Width, g_Height, true); // true meaning invert
-
-	}
-	//Spout::SendTexture(mSpoutFbo.getTexture().getId(), mSpoutFbo.getTexture().getTarget(), mSpoutFbo.getWidth(), mSpoutFbo.getHeight(), false);
-
 }
 
 void ReymentaLiveCodeApp::mouseMove( MouseEvent event )
@@ -127,8 +104,8 @@ void ReymentaLiveCodeApp::keyDown(KeyEvent event)
 		switch (event.getCode())
 		{
 		case KeyEvent::KEY_n:
-			mParameterBag->mEditorLineNumbers = !mParameterBag->mEditorLineNumbers;
-			mCodeEditor->enableLineNumbers(mParameterBag->mEditorLineNumbers);
+			//mParameterBag->mEditorLineNumbers = !mParameterBag->mEditorLineNumbers;
+			//mCodeEditor->enableLineNumbers(mParameterBag->mEditorLineNumbers);
 			break;
 		case KeyEvent::KEY_w:
 			mCodeEditor->enableLineWrapping(false);
@@ -164,14 +141,14 @@ void ReymentaLiveCodeApp::keyDown(KeyEvent event)
 		switch (event.getChar())
 		{
 		case '+'://43
-			mParameterBag->iBackgroundAlpha += 0.1;
+			/*mParameterBag->iBackgroundAlpha += 0.1;
 			if (mParameterBag->iBackgroundAlpha > 1.0) mParameterBag->iBackgroundAlpha = 1.0;
-			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);
+			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);*/
 			break;
 		case '-':// 
-			mParameterBag->iBackgroundAlpha -= 0.1;
+			/*mParameterBag->iBackgroundAlpha -= 0.1;
 			if (mParameterBag->iBackgroundAlpha < 0.0) mParameterBag->iBackgroundAlpha = 0.0;
-			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);
+			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);*/
 			break;
 		}
 	}
