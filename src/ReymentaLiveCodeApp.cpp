@@ -9,7 +9,7 @@ void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 	settings->setWindowSize(mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
 	settings->setFullScreen(false);
 	settings->setResizable(false); // keep the screen size constant for a sender
-	settings->setFrameRate(120.0f);
+	settings->setFrameRate(1000.0f);
 }
 
 void ReymentaLiveCodeApp::setup()
@@ -36,7 +36,9 @@ void ReymentaLiveCodeApp::setup()
 		}
 	});
 	mCodeEditor->setTheme("dark");
-	mCodeEditor->setOpacity(0.9f);
+	mCodeEditor->setOpacity(0.8f);
+	mCodeEditor->blur();
+
 	mCodeEditor->enableLineWrapping(false);
 }
 
@@ -101,7 +103,9 @@ void ReymentaLiveCodeApp::mouseWheel( MouseEvent event )
 
 void ReymentaLiveCodeApp::keyDown( KeyEvent event )
 {
-	
+	if (event.isAccelDown() && event.getCode() == KeyEvent::KEY_f){
+		setFullScreen(!isFullScreen());
+	}
 }
 
 void ReymentaLiveCodeApp::keyUp( KeyEvent event )
