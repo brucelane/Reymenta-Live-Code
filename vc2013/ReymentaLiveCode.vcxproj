@@ -64,7 +64,7 @@
       <AdditionalIncludeDirectories>"..\..\..\\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;%(AdditionalDependencies);..\..\..\blocks\Cinder-Awesomium\build\lib\msw\awesomium.lib;..\..\..\blocks\Cinder-Reymenta\lib\Spout.lib;..\..\..\blocks\Cinder-Spout\lib\Spout.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;%(AdditionalDependencies);..\..\..\blocks\Cinder-Awesomium\build\lib\msw\awesomium.lib;..\..\..\blocks\Cinder-Spout\lib\Spout.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\\lib\msw\$(PlatformTarget)"</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -101,8 +101,6 @@
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\show-hint.js" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\jquery.min.js" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\jquery.color.js" "$(OutDir)"
-xcopy /y "..\..\..\blocks\Cinder-Reymenta\lib\Spout.dll" "$(OutDir)"
-xcopy /y "..\..\..\blocks\Cinder-Reymenta\lib\SpoutPanel.exe" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-Spout\lib\Spout.dll" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</Command>
     </PostBuildEvent>
@@ -124,7 +122,7 @@
       <AdditionalIncludeDirectories>"..\..\..\\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset).lib;%(AdditionalDependencies);..\..\..\blocks\Cinder-Awesomium\build\lib\msw\awesomium.lib;..\..\..\blocks\Cinder-Reymenta\lib\Spout.lib;..\..\..\blocks\Cinder-Spout\lib\Spout.lib</AdditionalDependencies>
+      <AdditionalDependencies>cinder-$(PlatformToolset).lib;%(AdditionalDependencies);..\..\..\blocks\Cinder-Awesomium\build\lib\msw\awesomium.lib;..\..\..\blocks\Cinder-Spout\lib\Spout.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\\lib\msw\$(PlatformTarget)"</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
@@ -163,8 +161,6 @@
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\show-hint.js" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\jquery.min.js" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-CodeEditor\resources\CodeEditor\js\jquery.color.js" "$(OutDir)"
-xcopy /y "..\..\..\blocks\Cinder-Reymenta\lib\Spout.dll" "$(OutDir)"
-xcopy /y "..\..\..\blocks\Cinder-Reymenta\lib\SpoutPanel.exe" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-Spout\lib\Spout.dll" "$(OutDir)"
 xcopy /y "..\..\..\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</Command>
     </PostBuildEvent>

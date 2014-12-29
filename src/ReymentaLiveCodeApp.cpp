@@ -1,13 +1,12 @@
-
 #include "ReymentaLiveCodeApp.h"
-
 
 void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 {
 	settings->setTitle("Reymenta Live Code");
-	mRenderWidth = 1280;
-	mRenderHeight = 720;
-	settings->setWindowSize(mRenderWidth, mRenderHeight);
+	// parameters
+	mParameterBag = ParameterBag::create();
+
+	settings->setWindowSize(mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
 	settings->setFullScreen(false);
 	settings->setResizable(false); // keep the screen size constant for a sender
 	settings->setFrameRate(120.0f);
@@ -15,11 +14,8 @@ void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 
 void ReymentaLiveCodeApp::setup()
 {
-	// parameters
-	mParameterBag = ParameterBag::create();
 
 	iGlobalTime = 1.0f;
-	iResolution = Vec3f(mRenderWidth, mRenderHeight, 1.0);
 	// spout
 	glEnable(GL_TEXTURE_2D);
 	gl::enableDepthRead();
@@ -28,9 +24,9 @@ void ReymentaLiveCodeApp::setup()
 	// Create CodeEditor
 	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().window(mCodeEditorWindow).autoSave().codeCompletion());
 	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
-	mCodeEditor = CodeEditor::create(list_of<string>("simple.frag").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
+	mCodeEditor = CodeEditor::create(list_of<string>("simple.frag")("simple.vert").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
 
-	mCodeEditor->registerCodeChanged("simple.frag", [this](const string& frag) {
+	mCodeEditor->registerCodeChanged("simple.frag", "simple.vert", [this](const string& frag, const string& vert) {
 		try {
 			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
@@ -46,7 +42,7 @@ void ReymentaLiveCodeApp::setup()
 
 void ReymentaLiveCodeApp::shutdown()
 {
-	
+	mParameterBag->save();
 }
 
 void ReymentaLiveCodeApp::update()
@@ -65,9 +61,9 @@ void ReymentaLiveCodeApp::draw()
 		mShader.bind();
 		mShader.uniform("iGlobalTime", iGlobalTime);
 		// to move inside the shader it's ok: aShader.uniform("iResolution", Vec3f(mParameterBag->mRenderResoXY.x, mParameterBag->mRenderResoXY.y, 1.0));
-		mShader.uniform("iResolution", Vec3f(mRenderWidth, mRenderHeight, 1.0));
+		mShader.uniform("iResolution", mParameterBag->iResolution);
 		//gl::drawSolidRect(getWindowBounds());
-		gl::drawSolidRect(Rectf(100.0,100.0,300.0,300.0));
+		gl::drawSolidRect(Rectf(300.0,100.0,940.0,580.0));
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}

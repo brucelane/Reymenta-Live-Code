@@ -47,10 +47,8 @@ public:
 	void keyDown(KeyEvent event);
 	void keyUp(KeyEvent event);
 private:
-	int						mRenderWidth;
-	int						mRenderHeight;
+
 	float					iGlobalTime;        // shader playback time (in seconds)
-	Vec3f					iResolution;        // viewport resolution (in pixels)
 	gl::GlslProg			mShader;
 	CodeEditorRef			mCodeEditor;
 	Awesomium::WebCore*		mWebCorePtr;
@@ -62,5 +60,5 @@ private:
 	Font					mFont;
 	// Parameters
 	ParameterBagRef				mParameterBag;
-	const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
+	//const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
 };
