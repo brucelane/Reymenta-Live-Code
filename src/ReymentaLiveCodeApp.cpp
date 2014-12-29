@@ -1,3 +1,4 @@
+
 #include "ReymentaLiveCodeApp.h"
 
 
@@ -27,9 +28,9 @@ void ReymentaLiveCodeApp::setup()
 	// Create CodeEditor
 	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().window(mCodeEditorWindow).autoSave().codeCompletion());
 	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
-	mCodeEditor = CodeEditor::create(list_of<string>("shaders/simple.vert")("shaders/simple.frag").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
+	mCodeEditor = CodeEditor::create(list_of<string>("simple.frag").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
 
-	mCodeEditor->registerCodeChanged("shaders/simple.vert", "shaders/simple.frag", [this](const string& vert, const string& frag) {
+	mCodeEditor->registerCodeChanged("simple.frag", [this](const string& frag) {
 		try {
 			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
@@ -41,7 +42,6 @@ void ReymentaLiveCodeApp::setup()
 	mCodeEditor->setTheme("dark");
 	mCodeEditor->setOpacity(0.9f);
 	mCodeEditor->enableLineWrapping(false);
-
 }
 
 void ReymentaLiveCodeApp::shutdown()
@@ -51,14 +51,14 @@ void ReymentaLiveCodeApp::shutdown()
 
 void ReymentaLiveCodeApp::update()
 {
-	app::getWindow()->setTitle( "Reymenta Live Code - " + toString(getAverageFps()) );
+	app::getWindow()->setTitle("Reymenta Live Code - " + toString(getAverageFps()));
 	iGlobalTime = getElapsedSeconds();
 }
 
 void ReymentaLiveCodeApp::draw()
 {
 	// clear out the window with transparent
-	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 0.0f));
+	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 1.0f));
 
 	if (mShader){
 		gl::enableAlphaBlending();
@@ -66,15 +66,21 @@ void ReymentaLiveCodeApp::draw()
 		mShader.uniform("iGlobalTime", iGlobalTime);
 		// to move inside the shader it's ok: aShader.uniform("iResolution", Vec3f(mParameterBag->mRenderResoXY.x, mParameterBag->mRenderResoXY.y, 1.0));
 		mShader.uniform("iResolution", Vec3f(mRenderWidth, mRenderHeight, 1.0));
-		gl::drawSolidRect(getWindowBounds());
+		//gl::drawSolidRect(getWindowBounds());
+		gl::drawSolidRect(Rectf(100.0,100.0,300.0,300.0));
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}
 }
 
+void ReymentaLiveCodeApp::resize()
+{
+	
+}
+
 void ReymentaLiveCodeApp::mouseMove( MouseEvent event )
 {
-
+	
 }
 
 void ReymentaLiveCodeApp::mouseDown( MouseEvent event )
@@ -89,71 +95,18 @@ void ReymentaLiveCodeApp::mouseDrag( MouseEvent event )
 
 void ReymentaLiveCodeApp::mouseUp( MouseEvent event )
 {
-
+	
 }
 
 void ReymentaLiveCodeApp::mouseWheel( MouseEvent event )
 {
-
+	
 }
 
-void ReymentaLiveCodeApp::keyDown(KeyEvent event)
+void ReymentaLiveCodeApp::keyDown( KeyEvent event )
 {
-	if (event.isControlDown())
-	{
-		switch (event.getCode())
-		{
-		case KeyEvent::KEY_n:
-			//mParameterBag->mEditorLineNumbers = !mParameterBag->mEditorLineNumbers;
-			//mCodeEditor->enableLineNumbers(mParameterBag->mEditorLineNumbers);
-			break;
-		case KeyEvent::KEY_w:
-			mCodeEditor->enableLineWrapping(false);
-			break;
-		case KeyEvent::KEY_h:
-			mCodeEditor->hide();
-			break;
-		case KeyEvent::KEY_s:
-			mCodeEditor->show();
-			break;
-		case KeyEvent::KEY_1:
-			getWindow()->setPos(Vec2i(0, 0));
-			mCodeEditor->setOpacity(0.9f);
-			break;
-		case KeyEvent::KEY_2:
-			getWindow()->setPos(Vec2i(400, 300));
-			mCodeEditor->setOpacity(0.2f);
-			break;
-		case KeyEvent::KEY_3:
-			mCodeEditor->setFontSize(11);
-			break;
-		case KeyEvent::KEY_4:
-			mCodeEditor->setFontSize(14);
-			break;
-		case KeyEvent::KEY_5:
-			mCodeEditor->setFontSize(16);
-
-			break;
-		}
-	}
-	else
-	{
-		switch (event.getChar())
-		{
-		case '+'://43
-			/*mParameterBag->iBackgroundAlpha += 0.1;
-			if (mParameterBag->iBackgroundAlpha > 1.0) mParameterBag->iBackgroundAlpha = 1.0;
-			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);*/
-			break;
-		case '-':// 
-			/*mParameterBag->iBackgroundAlpha -= 0.1;
-			if (mParameterBag->iBackgroundAlpha < 0.0) mParameterBag->iBackgroundAlpha = 0.0;
-			mCodeEditor->setOpacity(mParameterBag->iBackgroundAlpha);*/
-			break;
-		}
-	}
+	
 }
-
 
 void ReymentaLiveCodeApp::keyUp( KeyEvent event )
 {

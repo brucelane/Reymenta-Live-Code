@@ -4,20 +4,20 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/gl/GlslProg.h"
 
+#include "CinderAwesomium.h"
 // transparent window
 #include "dwmapi.h"
 // parameters
 #include "ParameterBag.h"
 
 #include "CodeEditor.h"
-#include "UIController.h"
-#include "UIElement.h"
+
 #if defined( CINDER_COCOA )
 #include "cinderSyphon.h"
 #else
 #include "Spout.h"
 #endif
-// VisualStudio does'nt seem to support initializer_list
+// VisualStudio doesn't seem to support initializer_list
 // yet so let's use boost::assign::list_of instead
 #if defined( CINDER_MSW )
 #include "boost/assign/list_of.hpp"
@@ -25,18 +25,18 @@ using namespace boost::assign;
 #endif
 using namespace ci;
 using namespace ci::app;
+using namespace ph;
 using namespace std;
-using namespace MinimalUI;
 using namespace Reymenta;
 
 class ReymentaLiveCodeApp : public AppBasic {
 public:
 	void prepareSettings(Settings *settings);
-
 	void setup();
 	void shutdown();
 	void update();
 	void draw();
+	void resize();
 
 	void mouseMove(MouseEvent event);
 	void mouseDown(MouseEvent event);
@@ -53,7 +53,14 @@ private:
 	Vec3f					iResolution;        // viewport resolution (in pixels)
 	gl::GlslProg			mShader;
 	CodeEditorRef			mCodeEditor;
+	Awesomium::WebCore*		mWebCorePtr;
+	Awesomium::WebView*		mWebViewPtr;
+
+	gl::Texture				mWebTexture;
+	gl::Texture				mLoadingTexture;
+
+	Font					mFont;
 	// Parameters
 	ParameterBagRef				mParameterBag;
-
+	const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
 };

@@ -14,52 +14,46 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Blocks">
-      <UniqueIdentifier>{7DCDFDD9-5FCF-4E69-B2B0-ABD46E4AB710}</UniqueIdentifier>
+      <UniqueIdentifier>{AB637031-FD64-426B-B37E-513C70146148}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Awesomium">
-      <UniqueIdentifier>{BD76BA9C-FD03-421A-8EA3-67B5E157E8D8}</UniqueIdentifier>
+      <UniqueIdentifier>{04D0D6FF-26F0-42AF-B7F2-6BD495BBA500}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Awesomium\include">
-      <UniqueIdentifier>{94F34E80-6C02-4347-8E90-79D43058E546}</UniqueIdentifier>
+      <UniqueIdentifier>{D75E09E1-5E40-4B30-9E8D-B8A2A442BDBF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\Awesomium\src">
-      <UniqueIdentifier>{B9406DA4-7199-47EF-AA55-A971DD1CEC85}</UniqueIdentifier>
+      <UniqueIdentifier>{85B0BBC6-9716-4A88-BCEF-EED052061438}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\CodeEditor">
-      <UniqueIdentifier>{E55CCD8E-4EBE-419D-997F-EC1AD99F4B74}</UniqueIdentifier>
+      <UniqueIdentifier>{6EE86299-EF2F-4C25-A999-0378625FCABB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\CodeEditor\include">
-      <UniqueIdentifier>{87CCEF67-94B4-40E5-AF1C-62EFD89FFA9E}</UniqueIdentifier>
+      <UniqueIdentifier>{4110D3C5-C7FC-431A-985C-B745C1BDEC2C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Blocks\MinimalUI">
-      <UniqueIdentifier>{646C4BF2-AE6B-4615-BE38-A456372B9324}</UniqueIdentifier>
+    <Filter Include="Blocks\Reymenta">
+      <UniqueIdentifier>{71D2D787-A6A6-4D47-9222-1D793E21FE4B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Blocks\MinimalUI\src">
-      <UniqueIdentifier>{A77EF039-531C-45F2-B49C-BE8089D880B3}</UniqueIdentifier>
+    <Filter Include="Blocks\Reymenta\include">
+      <UniqueIdentifier>{6805EE4F-54A8-472D-9BF7-81AC232D1822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Blocks\MinimalUI\include">
-      <UniqueIdentifier>{FAEBA0DF-32D6-4EE3-9075-1319E5080BA0}</UniqueIdentifier>
+    <Filter Include="Blocks\Reymenta\src">
+      <UniqueIdentifier>{4E698E98-33DD-4D9E-AEFD-8DC029C39C0D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC">
-      <UniqueIdentifier>{3BFD9F52-2614-4C65-9A42-D79ADBA20537}</UniqueIdentifier>
+      <UniqueIdentifier>{9123C13D-0E6D-4569-BC92-1A0E3B6A394D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src">
-      <UniqueIdentifier>{AAA8F18F-5CC3-4643-B3B0-5D136AAE0017}</UniqueIdentifier>
+      <UniqueIdentifier>{B91F670C-318B-4C65-B18F-63D21F184D45}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\ip">
-      <UniqueIdentifier>{FD2F3E86-38EE-4A86-8288-DC5420C783ED}</UniqueIdentifier>
+      <UniqueIdentifier>{1BF110E8-6854-492A-873D-95B562092B4B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\osc">
-      <UniqueIdentifier>{3362696C-61F1-44F5-933D-F1A30376DC8D}</UniqueIdentifier>
+      <UniqueIdentifier>{AD437664-11DA-4345-B92C-567A3C705960}</UniqueIdentifier>
     </Filter>
     <Filter Include="Blocks\OSC\src\ip\win32">
-      <UniqueIdentifier>{B925A88A-E21E-4BEE-861F-90F54B990521}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Blocks\Spout">
-      <UniqueIdentifier>{DE8DF701-EB65-4EE2-8711-B658BE909579}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Blocks\Spout\include">
-      <UniqueIdentifier>{D92D36E7-A0BF-41BB-9192-0BE40041BB69}</UniqueIdentifier>
+      <UniqueIdentifier>{9B26AB85-FF43-4CEA-AAAD-03FA2D05D3C0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -84,48 +78,24 @@
     <ClCompile Include="..\..\..\blocks\Cinder-CodeEditor\include\CodeEditor.cpp">
       <Filter>Blocks\CodeEditor\include</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\Button.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\Button.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\OSCWrapper.h">
+      <Filter>Blocks\Reymenta\include</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\Label.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\Label.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\ParameterBag.h">
+      <Filter>Blocks\Reymenta\include</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\Slider.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\Slider.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Shaders.h">
+      <Filter>Blocks\Reymenta\include</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\Graph.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\OSCWrapper.cpp">
+      <Filter>Blocks\Reymenta\src</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\Graph.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\Image.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\ParameterBag.cpp">
+      <Filter>Blocks\Reymenta\src</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\Image.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\UIController.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Shaders.cpp">
+      <Filter>Blocks\Reymenta\src</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\UIController.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\..\blocks\Cinder-MinimalUI\src\UIElement.cpp">
-      <Filter>Blocks\MinimalUI\src</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Cinder-MinimalUI\include\UIElement.h">
-      <Filter>Blocks\MinimalUI\include</Filter>
-    </ClInclude>
     <ClCompile Include="..\..\..\blocks\OSC\src\OscBundle.cpp">
       <Filter>Blocks\OSC\src</Filter>
     </ClCompile>
@@ -213,30 +183,18 @@
     <ClCompile Include="..\..\..\blocks\OSC\src\ip\win32\UdpSocket.cpp">
       <Filter>Blocks\OSC\src\ip\win32</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
-      <Filter>Blocks\Spout\include</Filter>
-    </ClInclude>
-    <ClCompile Include="..\src\ParameterBag.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Logger.cpp">
+      <Filter>Blocks\Reymenta\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Logger.h">
+      <Filter>Blocks\Reymenta\include</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ReymentaLiveCodeApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ParameterBag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\blocks\Spout\include\Spout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
