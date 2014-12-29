@@ -63,7 +63,7 @@ void ReymentaLiveCodeApp::draw()
 		// to move inside the shader it's ok: aShader.uniform("iResolution", Vec3f(mParameterBag->mRenderResoXY.x, mParameterBag->mRenderResoXY.y, 1.0));
 		mShader.uniform("iResolution", mParameterBag->iResolution);
 		//gl::drawSolidRect(getWindowBounds());
-		gl::drawSolidRect(Rectf(300.0,100.0,940.0,580.0));
+		gl::drawSolidRect(Rectf(300.0, 100.0, 300.0 + mParameterBag->mFboWidth, 100.0 + mParameterBag->mFboHeight));
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}
