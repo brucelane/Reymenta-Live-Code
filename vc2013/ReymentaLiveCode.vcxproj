@@ -169,7 +169,10 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\AudioWrapper.h" />
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Batchass.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Logger.h" />
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Textures.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-Awesomium\include\CinderAwesomium.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-CodeEditor\include\CodeEditor.h" />
@@ -197,7 +200,10 @@
     <ClInclude Include="..\include\ReymentaLiveCodeApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\AudioWrapper.cpp" />
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Batchass.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Logger.cpp" />
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Textures.cpp" />
     <ClCompile Include="..\src\ReymentaLiveCodeApp.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-Awesomium\src\CinderAwesomium.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-CodeEditor\include\CodeEditor.cpp" />

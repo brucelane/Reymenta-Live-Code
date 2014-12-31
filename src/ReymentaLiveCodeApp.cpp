@@ -14,6 +14,8 @@ void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 
 void ReymentaLiveCodeApp::setup()
 {
+	// parameters
+	mBatchass = Batchass::create(mParameterBag);
 
 	iGlobalTime = 1.0f;
 	// spout
@@ -22,11 +24,10 @@ void ReymentaLiveCodeApp::setup()
 	gl::enableDepthWrite();
 
 	// Create CodeEditor
-	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().window(mCodeEditorWindow).autoSave().codeCompletion());
-	//mCodeEditor = CodeEditor::create("shaders/simple.frag", CodeEditor::Settings().autoSave().codeCompletion());
 	mCodeEditor = CodeEditor::create(list_of<string>("simple.frag")("simple.vert").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
 
-	mCodeEditor->registerCodeChanged("simple.frag", "simple.vert", [this](const string& frag, const string& vert) {
+	mCodeEditor->registerCodeChanged("simple.frag", "simple.vert", [this](const string& frag, const string& vert) 
+	{
 		try {
 			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
@@ -67,7 +68,8 @@ void ReymentaLiveCodeApp::draw()
 	// clear out the window with transparent
 	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 1.0f));
 
-	if (mShader){
+	if (mShader)
+	{
 		gl::enableAlphaBlending();
 		mShader.bind();
 		mShader.uniform("iGlobalTime", iGlobalTime);
@@ -79,8 +81,8 @@ void ReymentaLiveCodeApp::draw()
 		gl::disableAlphaBlending();
 	}
 	// -------- SPOUT SENDER-------------
-	if (bSenderInitialized) {
-
+	if (bSenderInitialized) 
+	{
 		// Grab the screen (current read buffer) into the local spout texture
 		spoutSenderTexture->bind();
 		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);

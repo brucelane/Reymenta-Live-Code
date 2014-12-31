@@ -9,6 +9,8 @@
 #include "dwmapi.h"
 // parameters
 #include "ParameterBag.h"
+// utils
+#include "Batchass.h"
 
 #include "CodeEditor.h"
 
@@ -48,18 +50,20 @@ public:
 	void keyUp(KeyEvent event);
 private:
 
-	float					iGlobalTime;        // shader playback time (in seconds)
-	gl::GlslProg			mShader;
-	CodeEditorRef			mCodeEditor;
-	Awesomium::WebCore*		mWebCorePtr;
-	Awesomium::WebView*		mWebViewPtr;
+	float						iGlobalTime;        // shader playback time (in seconds)
+	gl::GlslProg				mShader;
+	CodeEditorRef				mCodeEditor;
+	Awesomium::WebCore*			mWebCorePtr;
+	Awesomium::WebView*			mWebViewPtr;
 
-	gl::Texture				mWebTexture;
-	gl::Texture				mLoadingTexture;
+	gl::Texture					mWebTexture;
+	gl::Texture					mLoadingTexture;
 
-	Font					mFont;
+	Font						mFont;
 	// Parameters
 	ParameterBagRef				mParameterBag;
+	// Utils
+	BatchassRef					mBatchass;
 	//const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
 	// -------- SPOUT -------------
 	SpoutSender					spoutsender;                    // Create a Spout sender object
