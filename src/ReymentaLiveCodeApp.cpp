@@ -40,6 +40,15 @@ void ReymentaLiveCodeApp::setup()
 	mCodeEditor->blur();
 
 	mCodeEditor->enableLineWrapping(false);
+	// -------- SPOUT -------------
+	// Set up the texture we will use to send out
+	// We grab the screen so it has to be the same size
+	bSenderInitialized = false;
+	spoutSenderTexture = gl::Texture::create(mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
+	strcpy_s(SenderName, "Reymenta Live coding Spout Sender"); // we have to set a sender name first
+	// Initialize a sender
+	bSenderInitialized = spoutsender.CreateSender(SenderName, mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
+
 }
 
 void ReymentaLiveCodeApp::shutdown()
@@ -69,48 +78,58 @@ void ReymentaLiveCodeApp::draw()
 		mShader.unbind();
 		gl::disableAlphaBlending();
 	}
+	// -------- SPOUT SENDER-------------
+	if (bSenderInitialized) {
+
+		// Grab the screen (current read buffer) into the local spout texture
+		spoutSenderTexture->bind();
+		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
+		spoutSenderTexture->unbind();
+		spoutsender.SendTexture(spoutSenderTexture->getId(), spoutSenderTexture->getTarget(), mParameterBag->mRenderWidth, mParameterBag->mRenderHeight);
+	}
+
 }
 
 void ReymentaLiveCodeApp::resize()
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::mouseMove( MouseEvent event )
+void ReymentaLiveCodeApp::mouseMove(MouseEvent event)
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::mouseDown( MouseEvent event )
+void ReymentaLiveCodeApp::mouseDown(MouseEvent event)
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::mouseDrag( MouseEvent event )
+void ReymentaLiveCodeApp::mouseDrag(MouseEvent event)
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::mouseUp( MouseEvent event )
+void ReymentaLiveCodeApp::mouseUp(MouseEvent event)
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::mouseWheel( MouseEvent event )
+void ReymentaLiveCodeApp::mouseWheel(MouseEvent event)
 {
-	
+
 }
 
-void ReymentaLiveCodeApp::keyDown( KeyEvent event )
+void ReymentaLiveCodeApp::keyDown(KeyEvent event)
 {
 	if (event.isAccelDown() && event.getCode() == KeyEvent::KEY_f){
 		setFullScreen(!isFullScreen());
 	}
 }
 
-void ReymentaLiveCodeApp::keyUp( KeyEvent event )
+void ReymentaLiveCodeApp::keyUp(KeyEvent event)
 {
-	
+
 }
 
-CINDER_APP_BASIC( ReymentaLiveCodeApp, RendererGl )
+CINDER_APP_BASIC(ReymentaLiveCodeApp, RendererGl)

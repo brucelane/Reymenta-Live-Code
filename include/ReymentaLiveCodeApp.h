@@ -61,4 +61,12 @@ private:
 	// Parameters
 	ParameterBagRef				mParameterBag;
 	//const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
+	// -------- SPOUT -------------
+	SpoutSender					spoutsender;                    // Create a Spout sender object
+	bool						bSenderInitialized;             // true if a sender initializes OK
+	bool						bMemoryMode;                    // tells us if texture share compatible
+	//unsigned int				g_Width, g_Height;              // size of the texture being sent out
+	char						SenderName[256];                // sender name 
+	gl::TextureRef				spoutSenderTexture;             // Local Cinder texture used for sharing
+
 };
