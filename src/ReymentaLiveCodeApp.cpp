@@ -93,7 +93,6 @@ void ReymentaLiveCodeApp::draw()
 		gl::enableAlphaBlending();
 		mShader.bind();
 		mShader.uniform("iGlobalTime", mParameterBag->iGlobalTime);
-		// to move inside the shader it's ok: aShader.uniform("iResolution", Vec3f(mParameterBag->mRenderResoXY.x, mParameterBag->mRenderResoXY.y, 1.0));
 		mShader.uniform("iResolution", mParameterBag->iResolution);
 		
 		gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
