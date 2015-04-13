@@ -11,13 +11,18 @@
 #include "ParameterBag.h"
 // utils
 #include "Batchass.h"
+// WebSockets
+#include "WebSocketsWrapper.h"
+// UserInterface
+#include "CinderImGui.h"
 
 #include "CodeEditor.h"
 
 #if defined( CINDER_COCOA )
 #include "cinderSyphon.h"
 #else
-#include "Spout.h"
+// spout
+#include "SpoutWrapper.h"
 #endif
 // VisualStudio doesn't seem to support initializer_list
 // yet so let's use boost::assign::list_of instead
@@ -27,9 +32,12 @@ using namespace boost::assign;
 #endif
 using namespace ci;
 using namespace ci::app;
-using namespace ph;
+//using namespace ph;
 using namespace std;
 using namespace Reymenta;
+
+// imgui
+#define IM_ARRAYSIZE(_ARR)			((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
 class ReymentaLiveCodeApp : public AppBasic {
 public:
@@ -49,8 +57,6 @@ public:
 	void keyDown(KeyEvent event);
 	void keyUp(KeyEvent event);
 private:
-
-	float						iGlobalTime;        // shader playback time (in seconds)
 	gl::GlslProg				mShader;
 	CodeEditorRef				mCodeEditor;
 	Awesomium::WebCore*			mWebCorePtr;
@@ -64,13 +70,12 @@ private:
 	ParameterBagRef				mParameterBag;
 	// Utils
 	BatchassRef					mBatchass;
-	//const string&				vert="void main() { gl_FrontColor = gl_Color; gl_TexCoord[0] = gl_MultiTexCoord0; gl_Position = ftransform(); }";
-	// -------- SPOUT -------------
-	SpoutSender					spoutsender;                    // Create a Spout sender object
-	bool						bSenderInitialized;             // true if a sender initializes OK
-	bool						bMemoryMode;                    // tells us if texture share compatible
-	//unsigned int				g_Width, g_Height;              // size of the texture being sent out
-	char						SenderName[256];                // sender name 
-	gl::TextureRef				spoutSenderTexture;             // Local Cinder texture used for sharing
+	// WebSockets
+	WebSocketsRef				mWebSockets;
+	// spout
+	SpoutWrapperRef				mSpout;
+
+	// imgui
+	char						buf[32];
 
 };

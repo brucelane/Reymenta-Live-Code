@@ -169,6 +169,8 @@
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\blocks\Cinder-ImGui\include\CinderImGui.h" />
+    <ClInclude Include="..\..\..\blocks\Cinder-ImGui\lib\imgui\imgui.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\AudioWrapper.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Batchass.h" />
     <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\JSONWrapper.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="..\include\ReymentaLiveCodeApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\blocks\Cinder-ImGui\lib\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\blocks\Cinder-ImGui\src\CinderImGui.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\AudioWrapper.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Batchass.cpp" />
     <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\JSONWrapper.cpp" />

@@ -70,6 +70,12 @@
     <Filter Include="Blocks\Warping\include">
       <UniqueIdentifier>{6b04e45f-52cf-4f69-8fe7-0276640a0452}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Blocks\imGui">
+      <UniqueIdentifier>{53f0f403-ea27-42b3-9a44-a3b09b9567c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\imGui\src">
+      <UniqueIdentifier>{7a2d2f49-0225-417b-9a42-b6bae6469937}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ReymentaLiveCodeApp.cpp">
@@ -243,6 +249,12 @@
     <ClCompile Include="..\..\..\blocks\Cinder-WebSocketPP\src\WebSocketServer.cpp">
       <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\blocks\Cinder-ImGui\lib\imgui\imgui.cpp">
+      <Filter>Blocks\imGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\blocks\Cinder-ImGui\src\CinderImGui.cpp">
+      <Filter>Blocks\imGui\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -298,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\blocks\Cinder-Warping\include\WarpPerspectiveBilinear.h">
       <Filter>Blocks\Warping\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Cinder-ImGui\lib\imgui\imgui.h">
+      <Filter>Blocks\imGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Cinder-ImGui\include\CinderImGui.h">
+      <Filter>Blocks\imGui\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
