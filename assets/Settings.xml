@@ -20,9 +20,9 @@
 	<ShowUI value="1"/>
 	<CursorVisible value="1"/>
 	<IsOSCSender value="0"/>
-	<IsWebSocketsServer value="0"/>
+	<IsWebSocketsServer value="1"/>
 	<WebSocketsHost value="localhost"/>
-	<WebSocketsPort value="9002"/>
+	<WebSocketsPort value="80"/>
 	<FftSize value="512"/>
 	<WindowSize value="1024"/>
 </settings>

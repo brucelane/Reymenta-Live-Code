@@ -16,7 +16,7 @@ void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
 void ReymentaLiveCodeApp::setup()
 {
 	// instanciate the WebSockets class
-	mWebSockets = WebSockets::create(mParameterBag);
+	mWebSockets = WebSockets::create(mParameterBag, mBatchass);
 
 	// setup shaders and textures
 	mBatchass->setup();
@@ -41,6 +41,7 @@ void ReymentaLiveCodeApp::setup()
 		try {
 			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
+			mWebSockets->write(frag);
 		}
 		catch (gl::GlslProgCompileExc exc) {
 			mCodeEditor->setError("err: " + string(exc.what()));
@@ -147,10 +148,14 @@ void ReymentaLiveCodeApp::draw()
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
 	style.Colors[ImGuiCol_TooltipBg] = ImVec4(0.65f, 0.25f, 0.25f, 1.00f);
 #pragma endregion style
-	ui::SetNextWindowSize(ImVec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight), ImGuiSetCond_Once);
+	ui::SetNextWindowSize(ImVec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight*2), ImGuiSetCond_Once);
 	ui::SetNextWindowPos(ImVec2(getWindowWidth() - mParameterBag->mFboWidth, 0), ImGuiSetCond_Once);
 	ui::Begin("fbo");
 	{
+		if (ui::Button("Ping"))
+		{
+			mWebSockets->ping();
+		}
 		ui::Image((void*)mBatchass->getTexturesRef()->getFboTextureId(mParameterBag->mLiveFboIndex), Vec2i(mParameterBag->mFboWidth, mParameterBag->mFboHeight));
 	}
 	ui::End();
