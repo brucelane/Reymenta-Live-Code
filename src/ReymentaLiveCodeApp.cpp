@@ -50,6 +50,7 @@ void ReymentaLiveCodeApp::setup()
 	mCodeEditor->setTheme("dark");
 	mCodeEditor->setOpacity(0.8f);
 	mCodeEditor->blur();
+	mCodeEditor->enableLineNumbers();
 
 	mCodeEditor->enableLineWrapping(false);
 	// set ui window and io events callbacks
