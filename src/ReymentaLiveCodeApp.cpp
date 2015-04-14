@@ -28,35 +28,31 @@ void ReymentaLiveCodeApp::setup()
 	mParameterBag->iResolution.y = mParameterBag->mFboHeight;
 	mParameterBag->mRenderResolution = Vec2i(mParameterBag->mFboWidth, mParameterBag->mFboHeight);
 
-	// spout
-	//glEnable(GL_TEXTURE_2D);
-	//gl::enableDepthRead();
-	//gl::enableDepthWrite();
-
+	//mLiveShader = mBatchass->getShadersRef()->getLiveShader();
 	// Create CodeEditor
-	mCodeEditor = CodeEditor::create(list_of<string>("live.frag")("live.vert").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion());
+	mCodeEditor = CodeEditor::create(list_of<string>("live.frag")("live.vert").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion().lineNumbers());
 
-	mCodeEditor->registerCodeChanged("live.frag", "live.vert", [this](const string& frag, const string& vert) 
+	mCodeEditor->registerCodeChanged("live.frag", "live.vert", [this](const string& frag, const string& vert)
 	{
-		try {
-			mShader = gl::GlslProg(vert.c_str(), frag.c_str());
+		string rtn = mBatchass->getShadersRef()->loadLiveShader(frag);
+		if (rtn == "")
+		{
 			mCodeEditor->clearErrors();
 			mWebSockets->write(frag);
 		}
-		catch (gl::GlslProgCompileExc exc) {
-			mCodeEditor->setError("err: " + string(exc.what()));
+		else
+		{
+			mCodeEditor->setError("err: " + rtn);
 		}
 	});
 	mCodeEditor->setTheme("dark");
 	mCodeEditor->setOpacity(0.8f);
 	mCodeEditor->blur();
-	mCodeEditor->enableLineNumbers();
 
 	mCodeEditor->enableLineWrapping(false);
 	// set ui window and io events callbacks
 	ui::connectWindow(getWindow());
 	ui::initialize();
-
 }
 
 void ReymentaLiveCodeApp::shutdown()
@@ -90,17 +86,17 @@ void ReymentaLiveCodeApp::draw()
 	// clear out the window with black
 	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 1.0f));
 
-	if (mShader)
+	/*if (mShader)
 	{
-		gl::enableAlphaBlending();
-		mShader.bind();
-		mShader.uniform("iGlobalTime", mParameterBag->iGlobalTime);
-		mShader.uniform("iResolution", mParameterBag->iResolution);
-		
-		gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
-		mShader.unbind();
-		gl::disableAlphaBlending();
-	}
+	gl::enableAlphaBlending();
+	mShader.bind();
+	mShader.uniform("iGlobalTime", mParameterBag->iGlobalTime);
+	mShader.uniform("iResolution", mParameterBag->iResolution);
+
+	gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
+	mShader.unbind();
+	gl::disableAlphaBlending();
+	}*/
 	// imgui
 #pragma region style
 	// our theme variables
@@ -149,7 +145,7 @@ void ReymentaLiveCodeApp::draw()
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
 	style.Colors[ImGuiCol_TooltipBg] = ImVec4(0.65f, 0.25f, 0.25f, 1.00f);
 #pragma endregion style
-	ui::SetNextWindowSize(ImVec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight*2), ImGuiSetCond_Once);
+	ui::SetNextWindowSize(ImVec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight * 2), ImGuiSetCond_Once);
 	ui::SetNextWindowPos(ImVec2(getWindowWidth() - mParameterBag->mFboWidth, 0), ImGuiSetCond_Once);
 	ui::Begin("fbo");
 	{
@@ -157,7 +153,26 @@ void ReymentaLiveCodeApp::draw()
 		{
 			mWebSockets->ping();
 		}
+		ui::SameLine();
+		ui::Text("%s", mParameterBag->WSMsg.c_str());
+		ui::SameLine();
+
+		// foreground color
+		color[0] = mParameterBag->controlValues[1];
+		color[1] = mParameterBag->controlValues[2];
+		color[2] = mParameterBag->controlValues[3];
+		color[3] = mParameterBag->controlValues[4];
+		ui::ColorEdit4("f", color);
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (mParameterBag->controlValues[i + 1] != color[i])
+			{
+				mParameterBag->controlValues[i + 1] = color[i];
+			}
+		}
 		ui::Image((void*)mBatchass->getTexturesRef()->getFboTextureId(mParameterBag->mLiveFboIndex), Vec2i(mParameterBag->mFboWidth, mParameterBag->mFboHeight));
+
 	}
 	ui::End();
 }

@@ -57,7 +57,7 @@ public:
 	void keyDown(KeyEvent event);
 	void keyUp(KeyEvent event);
 private:
-	gl::GlslProg				mShader;
+
 	CodeEditorRef				mCodeEditor;
 	Awesomium::WebCore*			mWebCorePtr;
 	Awesomium::WebView*			mWebViewPtr;
@@ -77,5 +77,5 @@ private:
 
 	// imgui
 	char						buf[32];
-
+	float						color[4];
 };
