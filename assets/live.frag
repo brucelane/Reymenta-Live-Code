@@ -1,32 +1,41 @@
 #version 130
-uniform vec3  iResolution;    // viewport resolution (in pixels)
+uniform vec3  iResolution;   // viewport resolution (in pixels)
 uniform vec3  iColor;
 uniform float iGlobalTime;
+uniform float iZoom;
 uniform float iAlpha;
+uniform vec4  iMouse;
+uniform sampler2D iChannel0;
 
-float PI = 3.14159265359;
-
-float RATIO_SPINS_PEED = 5.2;
-float RATIO_SPIN_POWER = .01;
-float RATIO_DIVIDE = 20.0;
-float getAngle(vec2 uvCenter)
+// http://www.ustream.tv/recorded/51333511
+float map( in vec3 p )
 {
-	float angle = atan(uvCenter.y,uvCenter.x )/(2.0*PI);
-	if(angle <0.0) angle +=1.0;
-	return angle;
+  return length(p) - 1.0;
 }
-float getDis(vec2 v)
+
+void main( void )
 {
-	return sqrt(v.x* v.x + v.y*v.y);
-}			
-void main()
-{
-  vec2 uv = gl_FragCoord.xy / iResolution.xy;
-	vec2 uvCenter = uv - vec2(.5,1.0);
-	float angle = getAngle(uvCenter);
-	float dis = getDis(uvCenter) ;
-	angle = angle+ cos(dis*PI - iGlobalTime*RATIO_SPINS_PEED)*RATIO_SPIN_POWER;
-	
-	float color = cos(angle*2.0*PI*RATIO_DIVIDE);
-	gl_FragColor = vec4(iColor.r*color, iColor.g*color,iColor.b*color,iAlpha);  
+	vec2 uv = gl_FragCoord.xy / iResolution.xy;
+
+    vec2 p = -1.0 + 2.0*uv;
+    p.x *= iResolution.x /iResolution.y;
+	vec3 col = vec3(0.0);
+  	// camera origin
+    vec3 ro = vec3(0.0,0.0,2.0);
+  	// ray direction
+  	vec3 rd = normalize(vec3(p,-1.0));
+    float tmax = 20.0;
+  	float h = 0.001;
+  	float t = 0.0;
+  	for (int i = 0; i<100; i++)
+	{
+	  	if (h<0.001 || t>tmax) break;
+	  	h = map( ro + t*rd );
+	  	t += h;
+	}  
+    if (t<tmax)
+    {
+     	col = vec3(1.0, 0.4,0.2);   
+    }
+	gl_FragColor = vec4(col,1.0);
 }

@@ -154,7 +154,7 @@ void ReymentaLiveCodeApp::draw()
 			mWebSockets->ping();
 		}
 		ui::SameLine();
-		ui::Text("%s", mParameterBag->WSMsg.c_str());
+		ui::Text("%s", mParameterBag->mMsg.c_str());
 		ui::SameLine();
 
 		// foreground color
