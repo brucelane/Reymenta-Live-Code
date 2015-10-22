@@ -1,5 +1,6 @@
 #include "cinder/ImageIO.h"
-#include "cinder/app/AppBasic.h"
+#include "cinder/app/App.h"
+#include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/gl/GlslProg.h"
@@ -11,8 +12,6 @@
 #include "ParameterBag.h"
 // utils
 #include "Batchass.h"
-// WebSockets
-#include "WebSocketsWrapper.h"
 // UserInterface
 #include "CinderImGui.h"
 
@@ -32,16 +31,15 @@ using namespace boost::assign;
 #endif
 using namespace ci;
 using namespace ci::app;
-//using namespace ph;
+using namespace ph;
 using namespace std;
 using namespace Reymenta;
 
 // imgui
 #define IM_ARRAYSIZE(_ARR)			((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
-class ReymentaLiveCodeApp : public AppBasic {
+class ReymentaLiveCodeApp : public App {
 public:
-	void prepareSettings(Settings *settings);
 	void setup();
 	void shutdown();
 	void update();
@@ -62,20 +60,22 @@ private:
 	Awesomium::WebCore*			mWebCorePtr;
 	Awesomium::WebView*			mWebViewPtr;
 
-	gl::Texture					mWebTexture;
-	gl::Texture					mLoadingTexture;
-
+	gl::TextureRef				mWebTexture;
+	gl::TextureRef				mLoadingTexture;
+	gl::GlslProgRef				mShader;
 	Font						mFont;
 	// Parameters
 	ParameterBagRef				mParameterBag;
 	// Utils
 	BatchassRef					mBatchass;
-	// WebSockets
-	WebSocketsRef				mWebSockets;
-	// spout
-	SpoutWrapperRef				mSpout;
 
 	// imgui
 	char						buf[32];
 	float						color[4];
+	int							xPos;
+	int							yPos;
+	int							largeW;
+	int							largeH;
+	int							margin;
+	bool						removeUI;
 };

@@ -1,32 +1,24 @@
 #include "ReymentaLiveCodeApp.h"
 
-void ReymentaLiveCodeApp::prepareSettings(Settings *settings)
+void ReymentaLiveCodeApp::setup()
 {
-	settings->setTitle("Reymenta Live Code");
 	// parameters
 	mParameterBag = ParameterBag::create();
 	// utils
 	mBatchass = Batchass::create(mParameterBag);
 
-	settings->setWindowSize(mParameterBag->mMainWindowWidth, mParameterBag->mMainWindowHeight);
-	settings->setWindowPos(Vec2i(10, 50));
-	settings->setFrameRate(60.0f);
-}
-
-void ReymentaLiveCodeApp::setup()
-{
-	// instanciate the WebSockets class
-	mWebSockets = WebSockets::create(mParameterBag, mBatchass);
+	setWindowSize(mParameterBag->mMainWindowWidth, mParameterBag->mMainWindowHeight);
+	setWindowPos(ivec2(1610, 50));
+	setFrameRate(60.0f);
 
 	// setup shaders and textures
 	mBatchass->setup();
-	// instanciate the spout class
-	mSpout = SpoutWrapper::create(mParameterBag, mBatchass->getTexturesRef());
+
 	mParameterBag->mLiveCode = true;
 
 	mParameterBag->iResolution.x = mParameterBag->mFboWidth;
 	mParameterBag->iResolution.y = mParameterBag->mFboHeight;
-	mParameterBag->mRenderResolution = Vec2i(mParameterBag->mFboWidth, mParameterBag->mFboHeight);
+	mParameterBag->mRenderResolution = ivec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight);
 
 	//mLiveShader = mBatchass->getShadersRef()->getLiveShader();
 	// Create CodeEditor
@@ -34,15 +26,13 @@ void ReymentaLiveCodeApp::setup()
 
 	mCodeEditor->registerCodeChanged("live.frag", "live.vert", [this](const string& frag, const string& vert)
 	{
-		string rtn = mBatchass->getShadersRef()->loadLiveShader(frag);
-		if (rtn == "")
-		{
+		try {
+			mShader = gl::GlslProg::create(vert.c_str(), frag.c_str());
 			mCodeEditor->clearErrors();
-			mWebSockets->write(frag);
+			mBatchass->wsWriteText(frag);
 		}
-		else
-		{
-			mCodeEditor->setError("err: " + rtn);
+		catch (gl::GlslProgCompileExc exc) {
+			mCodeEditor->setError("Sphere: " + string(exc.what()));
 		}
 	});
 	mCodeEditor->setTheme("dark");
@@ -51,8 +41,12 @@ void ReymentaLiveCodeApp::setup()
 
 	mCodeEditor->enableLineWrapping(false);
 	// set ui window and io events callbacks
-	ui::connectWindow(getWindow());
 	ui::initialize();
+	margin = 3;
+	largeW = (mParameterBag->mPreviewFboWidth + margin) * 4;
+	largeH = (mParameterBag->mPreviewFboHeight + margin) * 5;
+	xPos = yPos = 0;
+	removeUI = false;
 }
 
 void ReymentaLiveCodeApp::shutdown()
@@ -62,7 +56,6 @@ void ReymentaLiveCodeApp::shutdown()
 
 void ReymentaLiveCodeApp::update()
 {
-	mWebSockets->update();
 	mParameterBag->iFps = getAverageFps();
 	mParameterBag->sFps = toString(floor(mParameterBag->iFps));
 	getWindow()->setTitle("(" + mParameterBag->sFps + " fps) Reymenta Live Code");
@@ -79,24 +72,23 @@ void ReymentaLiveCodeApp::update()
 void ReymentaLiveCodeApp::draw()
 {
 	// draw the fbos
-	mBatchass->getTexturesRef()->draw();
-	gl::setViewport(getWindowBounds());
+	//mBatchass->getTexturesRef()->draw();
 	gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
 
 	// clear out the window with black
 	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 1.0f));
 
-	/*if (mShader)
+	if (mShader)
 	{
-	gl::enableAlphaBlending();
-	mShader.bind();
-	mShader.uniform("iGlobalTime", mParameterBag->iGlobalTime);
-	mShader.uniform("iResolution", mParameterBag->iResolution);
+		gl::enableAlphaBlending();
+		mShader->bind();
+		mShader->uniform("iGlobalTime", mParameterBag->iGlobalTime);
+		mShader->uniform("iResolution", mParameterBag->iResolution);
 
-	gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
-	mShader.unbind();
-	gl::disableAlphaBlending();
-	}*/
+		gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
+		gl::disableAlphaBlending();
+	}
+	if (removeUI) return;
 	// imgui
 #pragma region style
 	// our theme variables
@@ -145,33 +137,39 @@ void ReymentaLiveCodeApp::draw()
 	style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
 	style.Colors[ImGuiCol_TooltipBg] = ImVec4(0.65f, 0.25f, 0.25f, 1.00f);
 #pragma endregion style
-	ui::SetNextWindowSize(ImVec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight * 2), ImGuiSetCond_Once);
-	ui::SetNextWindowPos(ImVec2(getWindowWidth() - mParameterBag->mFboWidth, 0), ImGuiSetCond_Once);
-	ui::Begin("fbo");
+
+#pragma region WebSockets
+	// websockets
+	ui::SetNextWindowSize(ImVec2(largeW, largeH), ImGuiSetCond_Once);
+	ui::SetNextWindowPos(ImVec2(xPos, yPos), ImGuiSetCond_Once);
+	ui::Begin("WebSockets server");
 	{
-		if (ui::Button("Ping"))
+		if (mParameterBag->mIsWebSocketsServer)
 		{
-			mWebSockets->ping();
+			ui::Text("WS Server %d", mParameterBag->mWebSocketsPort);
+			ui::Text("IP %s", mParameterBag->mWebSocketsHost.c_str());
 		}
+		else
+		{
+			ui::Text("WS Client %d", mParameterBag->mWebSocketsPort);
+			ui::Text("IP %s", mParameterBag->mWebSocketsHost.c_str());
+		}
+		if (ui::Button("Connect")) { mBatchass->wsConnect(); }
 		ui::SameLine();
+		if (ui::Button("Ping")) { mBatchass->wsPing(); }
+	}
+
+	ui::End();
+	xPos += largeW + margin;
+#pragma endregion WebSockets
+	ui::SetNextWindowSize(ImVec2(largeW, largeH), ImGuiSetCond_Once);
+	ui::SetNextWindowPos(ImVec2(xPos, yPos), ImGuiSetCond_Once);
+	ui::Begin("console");
+	{
 		ui::Text("%s", mParameterBag->mMsg.c_str());
 		ui::SameLine();
 
-		// foreground color
-		color[0] = mParameterBag->controlValues[1];
-		color[1] = mParameterBag->controlValues[2];
-		color[2] = mParameterBag->controlValues[3];
-		color[3] = mParameterBag->controlValues[4];
-		ui::ColorEdit4("f", color);
-
-		for (int i = 0; i < 4; i++)
-		{
-			if (mParameterBag->controlValues[i + 1] != color[i])
-			{
-				mParameterBag->controlValues[i + 1] = color[i];
-			}
-		}
-		ui::Image((void*)mBatchass->getTexturesRef()->getFboTextureId(mParameterBag->mLiveFboIndex), Vec2i(mParameterBag->mFboWidth, mParameterBag->mFboHeight));
+		ui::Image((void*)mBatchass->getTexturesRef()->getFboTextureId(mParameterBag->mLiveFboIndex), ivec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight));
 
 	}
 	ui::End();
@@ -219,4 +217,4 @@ void ReymentaLiveCodeApp::keyUp(KeyEvent event)
 
 }
 
-CINDER_APP_BASIC(ReymentaLiveCodeApp, RendererGl)
+CINDER_APP(ReymentaLiveCodeApp, RendererGl)
