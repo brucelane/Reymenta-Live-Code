@@ -32,20 +32,21 @@ void ReymentaLiveCodeApp::setup()
 			mBatchass->wsWriteText(frag);
 		}
 		catch (gl::GlslProgCompileExc exc) {
-			mCodeEditor->setError("Sphere: " + string(exc.what()));
+			mCodeEditor->setError("CodeEditor: " + string(exc.what()));
 		}
 	});
 	mCodeEditor->setTheme("dark");
 	mCodeEditor->setOpacity(0.8f);
 	mCodeEditor->blur();
-
+	mCodeEditor->setFontSize(16);
 	mCodeEditor->enableLineWrapping(false);
 	// set ui window and io events callbacks
 	ui::initialize();
 	margin = 3;
 	largeW = (mParameterBag->mPreviewFboWidth + margin) * 4;
 	largeH = (mParameterBag->mPreviewFboHeight + margin) * 5;
-	xPos = yPos = 0;
+	xPos = 0;
+	yPos = 400;
 	removeUI = false;
 }
 

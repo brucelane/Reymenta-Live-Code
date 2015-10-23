@@ -228,9 +228,6 @@
     <ClCompile Include="..\..\..\blocks\OSC\src\ip\win32\UdpSocket.cpp">
       <Filter>Blocks\OSC\src\ip\win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Logger.cpp">
-      <Filter>Blocks\Reymenta\src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\AudioWrapper.cpp">
       <Filter>Blocks\Reymenta\src</Filter>
     </ClCompile>
@@ -309,13 +306,13 @@
     <ClCompile Include="..\..\..\blocks\Cinder-ImGui\lib\imgui\imgui_draw.cpp">
       <Filter>Blocks\imGui\lib\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\blocks\Cinder-Reymenta\src\Logan.cpp">
+      <Filter>Blocks\Reymenta\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Logger.h">
-      <Filter>Blocks\Reymenta\include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReymentaLiveCodeApp.h">
       <Filter>Header Files</Filter>
@@ -436,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\blocks\Cinder-Spout\include\SpoutSharedMemory.h">
       <Filter>Blocks\Cinder-Spout\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\blocks\Cinder-Reymenta\include\Logan.h">
+      <Filter>Blocks\Reymenta\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

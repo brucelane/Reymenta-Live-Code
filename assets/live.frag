@@ -1,4 +1,4 @@
-uniform vec3  iResolution;   // viewport resolution (in pixels)
+uniform vec3  iResolution;  // viewport resolution (in pixels)
 uniform vec3  iColor;
 uniform float iGlobalTime;
 uniform float iZoom;
@@ -14,7 +14,6 @@ out vec4 oColor;
 
 void main( void )
 {
-	vec4 color 	= vec4( 0.9, sin(iGlobalTime*iResolution.x/200.0), 0.1, 1.0 );
-
+	vec4 color 	= vec4( sin(iGlobalTime*iResolution.y/100.0), sin(iGlobalTime*iResolution.x/100.0), 0.0, 1.0 );
 	oColor 		= color;
 }
