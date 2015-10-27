@@ -6,6 +6,7 @@ void ReymentaLiveCodeApp::setup()
 	mParameterBag = ParameterBag::create();
 	// utils
 	mBatchass = Batchass::create(mParameterBag);
+	CI_LOG_V("reymenta setup");
 
 	setWindowSize(mParameterBag->mMainWindowWidth, mParameterBag->mMainWindowHeight);
 	setWindowPos(ivec2(1610, 50));
