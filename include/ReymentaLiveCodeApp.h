@@ -62,6 +62,7 @@ private:
 
 	gl::TextureRef				mWebTexture;
 	gl::TextureRef				mLoadingTexture;
+	gl::TextureRef				mTexture;
 	gl::GlslProgRef				mShader;
 	Font						mFont;
 	// Parameters

@@ -21,6 +21,7 @@ void ReymentaLiveCodeApp::setup()
 	mParameterBag->iResolution.y = mParameterBag->mFboHeight;
 	mParameterBag->mRenderResolution = ivec2(mParameterBag->mFboWidth, mParameterBag->mFboHeight);
 
+	mTexture = gl::Texture::create(loadImage(loadAsset("reymenta.jpg")));
 	//mLiveShader = mBatchass->getShadersRef()->getLiveShader();
 	// Create CodeEditor
 	mCodeEditor = CodeEditor::create(list_of<string>("live.frag")("live.vert").convert_to_container<vector<fs::path>>(), CodeEditor::Settings().autoSave().codeCompletion().lineNumbers());
@@ -46,8 +47,8 @@ void ReymentaLiveCodeApp::setup()
 	margin = 3;
 	largeW = (mParameterBag->mPreviewFboWidth + margin) * 4;
 	largeH = (mParameterBag->mPreviewFboHeight + margin) * 5;
-	xPos = 0;
-	yPos = 400;
+	xPos = mParameterBag->mMainWindowWidth - largeW*2 - 30;
+	yPos = mParameterBag->mMainWindowHeight / 2;
 	removeUI = false;
 }
 
@@ -73,22 +74,34 @@ void ReymentaLiveCodeApp::update()
 
 void ReymentaLiveCodeApp::draw()
 {
+
 	// draw the fbos
 	//mBatchass->getTexturesRef()->draw();
 	gl::setMatricesWindow(getWindowWidth(), getWindowHeight());
 
 	// clear out the window with black
 	gl::clear(ColorAf(0.0f, 0.0f, 0.0f, 1.0f));
-
 	if (mShader)
 	{
+		mTexture->bind();
+
 		gl::enableAlphaBlending();
 		mShader->bind();
 		mShader->uniform("iGlobalTime", mParameterBag->iGlobalTime);
 		mShader->uniform("iResolution", mParameterBag->iResolution);
+		mShader->uniform("iChannel0", 0);
+		mShader->uniform("iChannel1", 0);
+		mShader->uniform("iChannel2", 0);
+		mShader->uniform("iChannel3", 0);
+		mShader->uniform("iChannel4", 0);
+		mShader->uniform("iChannel5", 0);
+		mShader->uniform("iChannel6", 0);
+		mShader->uniform("iChannel7", 0);
 
-		gl::drawSolidRect(Rectf(600.0, 400.0, 600.0 + mParameterBag->mFboWidth, 400.0 + mParameterBag->mFboHeight));
+		gl::drawSolidRect(Rectf(0, yPos, mParameterBag->mFboWidth, yPos + mParameterBag->mFboHeight));
 		gl::disableAlphaBlending();
+		mTexture->unbind();
+		
 	}
 	if (removeUI) return;
 	// imgui
