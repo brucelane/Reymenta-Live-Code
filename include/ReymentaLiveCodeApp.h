@@ -65,6 +65,7 @@ private:
 	gl::TextureRef				mTexture;
 	gl::GlslProgRef				mShader;
 	Font						mFont;
+	bool						mFirstLaunch;
 	// Parameters
 	ParameterBagRef				mParameterBag;
 	// Utils

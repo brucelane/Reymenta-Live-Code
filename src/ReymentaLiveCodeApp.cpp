@@ -11,6 +11,7 @@ void ReymentaLiveCodeApp::setup()
 	setWindowSize(mParameterBag->mMainWindowWidth, mParameterBag->mMainWindowHeight);
 	setWindowPos(ivec2(1610, 50));
 	setFrameRate(60.0f);
+	mFirstLaunch = true;
 
 	// setup shaders and textures
 	mBatchass->setup();
@@ -59,6 +60,10 @@ void ReymentaLiveCodeApp::shutdown()
 
 void ReymentaLiveCodeApp::update()
 {
+	if (mFirstLaunch) {
+		CI_LOG_V("update begin");
+		CI_LOG_V(getElapsedFrames());
+	}
 	mParameterBag->iFps = getAverageFps();
 	mParameterBag->sFps = toString(floor(mParameterBag->iFps));
 	getWindow()->setTitle("(" + mParameterBag->sFps + " fps) Reymenta Live Code");
@@ -69,11 +74,17 @@ void ReymentaLiveCodeApp::update()
 
 	mParameterBag->iGlobalTime = getElapsedSeconds();
 	mBatchass->update();
+	if (mFirstLaunch) {
+		CI_LOG_V("end");
+	}
 
 }
 
 void ReymentaLiveCodeApp::draw()
 {
+	if (mFirstLaunch) {
+		CI_LOG_V("draw begin");
+	}
 
 	// draw the fbos
 	//mBatchass->getTexturesRef()->draw();
@@ -89,6 +100,7 @@ void ReymentaLiveCodeApp::draw()
 		mShader->bind();
 		mShader->uniform("iGlobalTime", mParameterBag->iGlobalTime);
 		mShader->uniform("iResolution", mParameterBag->iResolution);
+		mShader->uniform("iColor", vec3(mParameterBag->controlValues[1], mParameterBag->controlValues[2], mParameterBag->controlValues[3]));
 		mShader->uniform("iChannel0", 0);
 		mShader->uniform("iChannel1", 0);
 		mShader->uniform("iChannel2", 0);
@@ -188,6 +200,10 @@ void ReymentaLiveCodeApp::draw()
 
 	}
 	ui::End();
+	if (mFirstLaunch) {
+		CI_LOG_V("draw end");
+		mFirstLaunch = false;
+	}
 }
 
 void ReymentaLiveCodeApp::resize()
