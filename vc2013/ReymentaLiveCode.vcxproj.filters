@@ -103,9 +103,6 @@
     <Filter Include="Blocks\Cinder-Spout\include">
       <UniqueIdentifier>{1fcdc9df-6831-46ce-84cb-9be3829e41c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="assets">
-      <UniqueIdentifier>{e5d2bf65-7bfa-42f1-abef-b8faed752c73}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ReymentaLiveCodeApp.cpp">
@@ -442,21 +439,5 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\assets\live.frag">
-      <Filter>assets</Filter>
-    </None>
-    <None Include="..\assets\live.vert">
-      <Filter>assets</Filter>
-    </None>
-    <None Include="..\assets\shadertoy.inc">
-      <Filter>assets</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\assets\Settings.xml">
-      <Filter>assets</Filter>
-    </Xml>
   </ItemGroup>
 </Project>

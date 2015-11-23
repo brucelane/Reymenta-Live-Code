@@ -277,14 +277,6 @@
     <ClCompile Include="..\..\..\blocks\OSC\src\ip\win32\NetworkingUtils.cpp" />
     <ClCompile Include="..\..\..\blocks\OSC\src\ip\win32\UdpSocket.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\assets\live.frag" />
-    <None Include="..\assets\live.vert" />
-    <None Include="..\assets\shadertoy.inc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\assets\Settings.xml" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
